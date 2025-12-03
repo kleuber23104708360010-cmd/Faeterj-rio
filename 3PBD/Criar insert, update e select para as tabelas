@@ -1,0 +1,78 @@
+INSERT INTO Especialidade (nome, descricao) VALUES
+('Salão de Beleza', 'Serviços de cabelo, manicure e pedicure.'),
+('Estética Corporal', 'Tratamentos estéticos como massagens e drenagens.'),
+('Estética Facial', 'Cuidados e tratamentos para o rosto.');
+
+SELECT * FROM Especialidade;
+
+SELECT nome, especialidade_id FROM Especialidade WHERE nome = 'Salão de Beleza';
+
+UPDATE Especialidade
+SET descricao = 'Procedimentos de limpeza de pele e harmonização facial.'
+WHERE nome = 'Estética Facial';
+
+
+
+INSERT INTO Cliente (nome, email, telefone) VALUES
+('Maria Silva', 'maria.silva@teste.com', '11987654321'),
+('Ana Paula Souza', 'ana.paula@teste.com', '21999887766');
+
+SELECT cliente_id, nome, email FROM Cliente;
+
+SELECT * FROM Cliente WHERE nome LIKE 'Maria%';
+
+UPDATE Cliente
+SET telefone = '11987650000'
+WHERE email = 'maria.silva@teste.com';
+
+
+
+INSERT INTO Profissional (nome, email, telefone, especialidade_principal_id) VALUES
+('Isabela Mendes', 'isabela.mendes@clinica.com', '1155551234', 1),
+('Joana Dantas', 'joana.dantas@clinica.com', '1155554321', 2);
+
+SELECT
+    P.nome AS Profissional,
+    E.nome AS Especialidade
+FROM
+    Profissional P
+JOIN
+    Especialidade E ON P.especialidade_principal_id = E.especialidade_id;
+
+UPDATE Profissional
+SET especialidade_principal_id = 1
+WHERE nome = 'Joana Dantas';
+
+
+
+INSERT INTO Servico (nome, descricao, preco, duracao_minutos, especialidade_id) VALUES
+('Corte Feminino + Escova', 'Corte moderno e finalização com escova.', 120.00, 75, 1),
+('Manicure e Pedicure', 'Esmaltação e tratamento completo.', 65.00, 90, 1),
+('Drenagem Linfática', 'Massagem para redução de retenção de líquidos.', 150.00, 60, 2);
+
+SELECT
+    S.nome,
+    S.preco,
+    S.duracao_minutos
+FROM
+    Servico S
+JOIN
+    Especialidade E ON S.especialidade_id = E.especialidade_id
+WHERE
+    E.nome = 'Estética Corporal';
+
+UPDATE Servico
+SET preco = preco * 1.10
+WHERE nome = 'Drenagem Linfática';
+
+
+
+INSERT INTO Pacote (nome, descricao, preco_pacote) VALUES
+('Dia da Noiva', 'Serviços completos de cabelo, maquiagem e massagem relaxante.', 850.00),
+('Bem-Estar Mensal', 'Quatro sessões de massagem corporal.', 500.00);
+
+SELECT * FROM Pacote ORDER BY preco_pacote DESC;
+
+UPDATE Pacote
+SET preco_pacote = 799.90
+WHERE nome = 'Dia da Noiva';
