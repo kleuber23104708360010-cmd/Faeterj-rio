@@ -48,7 +48,7 @@ CREATE TABLE locacoes (
     periodo_dias INT NOT NULL CHECK (periodo_dias IN (7, 15, 30)),
     com_motorista BOOLEAN DEFAULT FALSE,
     taxa_distante DECIMAL(10,2) DEFAULT 0.00,
-    valor_total DECIMAL(10,2) NOT NULL,
+    valor_final DECIMAL(10,2) DEFAULT NULL,
     data_reserva DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_cliente) REFERENCES clientes(id_cliente) ON DELETE RESTRICT,
     FOREIGN KEY (id_veiculo) REFERENCES veiculos(id_veiculo) ON DELETE RESTRICT,
@@ -62,7 +62,7 @@ CREATE TABLE pagamentos (
     numero_cartao VARCHAR(20) NOT NULL,
     nome_titular VARCHAR(100) NOT NULL,
     data_validade VARCHAR(7) NOT NULL,
-    valor_pago DECIMAL(10,2) NOT NULL,
+    valor_inicial DECIMAL(10,2) NOT NULL,
     data_pagamento DATETIME DEFAULT CURRENT_TIMESTAMP,
     status_pagamento VARCHAR(20) DEFAULT 'Confirmado',
     FOREIGN KEY (id_locacao) REFERENCES locacoes(id_locacao) ON DELETE CASCADE
@@ -82,7 +82,7 @@ CREATE TABLE itens_checkup (
     id_checkup INT NOT NULL,
     tipo_item VARCHAR(30) NOT NULL CHECK (tipo_item IN ('Avaria', 'Multa', 'Limpeza', 'Outros')),
     descricao TEXT,
-    valor_cobranca DECIMAL(10,2) DEFAULT 0.00,
+    valor_adicional DECIMAL(10,2) DEFAULT 0.00,
     FOREIGN KEY (id_checkup) REFERENCES checkups(id_checkup) ON DELETE CASCADE
 )engine=InnoDB;
 
